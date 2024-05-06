@@ -27,3 +27,6 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "100"
 
 vim.g.mapleader = " "
+
+-- used for obsidian
+vim.opt.conceallevel = 1
