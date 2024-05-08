@@ -56,6 +56,7 @@ return require("packer").startup(function(use)
 		  {'hrsh7th/cmp-nvim-lsp'},
 		  {'L3MON4D3/LuaSnip'},
 	  },
+  }
 
   use({
     "epwalsh/obsidian.nvim",
@@ -121,5 +122,4 @@ return require("packer").startup(function(use)
       }
     }
   })
-}
 end)
