@@ -1,24 +1,42 @@
-vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>en", ":Ex<CR>")
+local map = vim.keymap.set
 
--- move highligheted text up and down
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.g.mapleader = ' '
+map('n', '<leader>en', ':Ex<CR>')
 
--- lsp suggestions menu navigation
-vim.keymap.set("n", "<leader>y", "\"+y")
-vim.keymap.set("v", "<leader>y", "\"+y")
-vim.keymap.set("n", "<leader>Y", "\"+Y")
+-- move highligheted text up and down + tab and shift tab
+map('v', 'J', ':m \'>+1<CR>gv=gv')
+map('v', 'K', ':m \'<-2<CR>gv=gv')
+map('v', '<Tab>', '>gv')
+map('v', '<S-Tab>', '<gv')
 
 -- personal remaps
-vim.keymap.set("i", "jj", "<Esc>");
-vim.keymap.set("v", "fj", "<Esc>");
+map('i', 'jj', '<Esc>');
+map('v', 'fj', '<Esc>');
+map('n', '<leader><leader>x', function ()
+  vim.cmd('w')
+  vim.cmd('so %')
+end)
 
 -- obsidian
-vim.keymap.set("n", "gf", function()
-  if require("obsidian").uitl.cursor_on_markdown_Link then
+map('n', 'gf', function()
+  if require('obsidian').uitl.cursor_on_markdown_Link then
     return '<cmd>ObsidialFollowLink<CR>'
   else
     return 'gf'
   end
 end, { noremap = false, expr = true})
+
+-- LuaSnip
+local ls = require('luasnip')
+map({'i'}, '<C-K>', function() ls.expand() end, {silent = true})
+map({'i', 's'}, '<C-L>', function() ls.jump( 1) end, {silent = true})
+map({'i', 's'}, '<C-J>', function() ls.jump(-1) end, {silent = true})
+
+map({'i', 's'}, '<C-E>', function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, {silent = true})
+
+-- telescope help
+map('n', '<leader>th', ':Telescope help_tags<Enter>')

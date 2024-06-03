@@ -1,5 +1,5 @@
 function ColorTerminal()
-	color = color or "melange"
+	color = color or "everforest"
 
   vim.opt.termguicolors = true
 	vim.cmd.colorscheme(color)

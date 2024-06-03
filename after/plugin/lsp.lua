@@ -11,10 +11,10 @@ cmp.setup({
     { name = 'luasnip' },
   },
   mapping = {
-    ['L'] = cmp.mapping.confirm({select = false}),
-    ['E'] = cmp.mapping.abort(),
-    ['K'] = cmp.mapping.select_prev_item({behavior = 'select'}),
-    ['J'] = cmp.mapping.select_next_item({behavior = 'select'}),
+    ['<C-l>'] = cmp.mapping.confirm({select = true}),
+    ['<C-q>'] = cmp.mapping.abort(),
+    ['<C-k>'] = cmp.mapping.select_prev_item({behavior = 'select'}),
+    ['<C-j>'] = cmp.mapping.select_next_item({behavior = 'select'}),
   },
   snippet = {
     expand = function(args)
@@ -35,9 +35,10 @@ require('mason-lspconfig').setup({
   ensure_installed = {
 	  'tsserver',
 	  'eslint',
-    'ltex',
 	  'lua_ls',
     'html',
+    'htmx',
+    'gopls'
   },
   handlers = {
     lsp.default_setup,
@@ -54,7 +55,7 @@ require('mason-lspconfig').setup({
             },
             diagnostics = {
               -- Get the language server to recognize the `vim` global
-              globals = {'vim'},
+              globals = {'vim', color, 'P'},
             },
             workspace = {
               -- Make the server aware of Neovim runtime files
@@ -71,6 +72,18 @@ require('mason-lspconfig').setup({
 
     ltex = function()
       lspconfig.ltex.setup {}
+    end,
+
+    gopls = function()
+      lspconfig.gopls.setup {}
+    end,
+
+    htmx = function ()
+     lspconfig.htmx.setup {}
+    end,
+
+    cssls = function ()
+      lspconfig.cssls.setup {}
     end,
   }
 })
