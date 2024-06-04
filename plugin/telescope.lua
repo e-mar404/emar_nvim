@@ -1,4 +1,7 @@
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
-vim.keymap.set('n', '<leader>lg', builtin.live_grep, {})
+local Map = vim.keymap.set
+
+Map('n', '<leader>pf', builtin.find_files, {})
+Map('n', '<leader>pg', builtin.git_files, {})
+Map('n', '<leader>lg', builtin.live_grep, {})
+Map('n', '<leader>th', ':Telescope help_tags<Enter>')

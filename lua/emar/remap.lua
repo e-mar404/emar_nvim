@@ -1,24 +1,28 @@
-local map = vim.keymap.set
+local Map = vim.keymap.set
 
 vim.g.mapleader = ' '
-map('n', '<leader>en', ':Ex<CR>')
+
+Map('n', '<leader>en', ':Ex<CR>')
+
+-- will take yanked text and copy it to clipboard
+Map('v', '<leader>y', '"+y')
 
 -- move highligheted text up and down + tab and shift tab
-map('v', 'J', ':m \'>+1<CR>gv=gv')
-map('v', 'K', ':m \'<-2<CR>gv=gv')
-map('v', '<Tab>', '>gv')
-map('v', '<S-Tab>', '<gv')
+Map('v', 'J', ':m \'>+1<CR>gv=gv')
+Map('v', 'K', ':m \'<-2<CR>gv=gv')
+Map('v', '<Tab>', '>gv')
+Map('v', '<S-Tab>', '<gv')
 
 -- personal remaps
-map('i', 'jj', '<Esc>');
-map('v', 'fj', '<Esc>');
-map('n', '<leader><leader>x', function ()
+Map('i', 'jj', '<Esc>');
+Map('v', 'fj', '<Esc>');
+Map('n', '<leader><leader>x', function ()
   vim.cmd('w')
   vim.cmd('so %')
 end)
 
 -- obsidian
-map('n', 'gf', function()
+Map('n', 'gf', function()
   if require('obsidian').uitl.cursor_on_markdown_Link then
     return '<cmd>ObsidialFollowLink<CR>'
   else
@@ -28,15 +32,12 @@ end, { noremap = false, expr = true})
 
 -- LuaSnip
 local ls = require('luasnip')
-map({'i'}, '<C-K>', function() ls.expand() end, {silent = true})
-map({'i', 's'}, '<C-L>', function() ls.jump( 1) end, {silent = true})
-map({'i', 's'}, '<C-J>', function() ls.jump(-1) end, {silent = true})
+Map({'i'}, '<C-K>', function() ls.expand() end, {silent = true})
+Map({'i', 's'}, '<C-L>', function() ls.jump( 1) end, {silent = true})
+Map({'i', 's'}, '<C-J>', function() ls.jump(-1) end, {silent = true})
 
-map({'i', 's'}, '<C-E>', function()
+Map({'i', 's'}, '<C-E>', function()
 	if ls.choice_active() then
 		ls.change_choice(1)
 	end
 end, {silent = true})
-
--- telescope help
-map('n', '<leader>th', ':Telescope help_tags<Enter>')
