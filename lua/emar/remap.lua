@@ -1,4 +1,5 @@
 local Map = vim.keymap.set
+local tooltip = require("em-tooltip")
 
 vim.g.mapleader = ' '
 
@@ -41,3 +42,9 @@ Map({'i', 's'}, '<C-E>', function()
 		ls.change_choice(1)
 	end
 end, {silent = true})
+
+-- em-tooltip
+Map('n', '<leader>js', function()
+  tooltip.run({ "node", "index.js" })
+end)
+
