@@ -55,7 +55,7 @@ require('mason-lspconfig').setup({
             },
             diagnostics = {
               -- Get the language server to recognize the `vim` global
-              globals = { 'vim', color, 'P' },
+              globals = { 'vim', color, 'P', 'describe', 'it' },
             },
             workspace = {
               -- Make the server aware of Neovim runtime files
