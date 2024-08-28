@@ -1,8 +1,9 @@
 local Map = vim.keymap.set
-local tooltip = require("em-tooltip")
+local tooltip = require("tooltip")
 
 vim.g.mapleader = ' '
 
+-- go to explore page
 Map('n', '<leader>en', ':Ex<CR>')
 
 -- will take yanked text and copy it to clipboard
@@ -22,15 +23,6 @@ Map('n', '<leader><leader>x', function ()
   vim.cmd('so %')
 end)
 
--- obsidian
-Map('n', 'gf', function()
-  if require('obsidian').uitl.cursor_on_markdown_Link then
-    return '<cmd>ObsidialFollowLink<CR>'
-  else
-    return 'gf'
-  end
-end, { noremap = false, expr = true})
-
 -- LuaSnip
 local ls = require('luasnip')
 Map({'i'}, '<C-K>', function() ls.expand() end, {silent = true})
@@ -43,8 +35,7 @@ Map({'i', 's'}, '<C-E>', function()
 	end
 end, {silent = true})
 
--- em-tooltip
-Map('n', '<leader>js', function()
-  tooltip.run({ "node", "index.js" })
+-- universal-tooltip
+Map('n', '<leader>rp', function ()
+  tooltip.show()
 end)
-

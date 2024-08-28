@@ -28,5 +28,8 @@ vim.opt.colorcolumn = "80"
 
 vim.g.mapleader = " "
 
+-- used for tooltip
+vim.opt.eol = false
+
 -- used for obsidian
 vim.opt.conceallevel = 1

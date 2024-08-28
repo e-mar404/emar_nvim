@@ -76,8 +76,12 @@ return require("packer").startup(function(use)
 	  },
   }
 
-  -- dev plugins
-  use "~/plugins/em-tooltip.nvim"
+  -- personal plugins
+  -- dev
+  use "~/plugins/tooltip.nvim"
+
+  -- prod
+  -- use "e-mar404/tooltip.nvim"
 
   -- TODO: see about getting obsidian set up
 end)
