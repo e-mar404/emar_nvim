@@ -1,5 +1,3 @@
-vim.opt.guicursor = ""
-
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
@@ -12,7 +10,7 @@ vim.opt.smartindent = true
 
 vim.opt.swapfile = true
 vim.opt.backup = false
--- vim.opt.undodir = os.getend("HOME") .. "/.vim/undodir"
+-- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile= true
 
 vim.opt.hlsearch = false
@@ -33,3 +31,7 @@ vim.opt.eol = false
 
 -- used for obsidian
 vim.opt.conceallevel = 1
+
+-- spell
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true

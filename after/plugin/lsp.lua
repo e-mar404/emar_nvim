@@ -1,34 +1,63 @@
-local lsp = require('lsp-zero')
+local ls = require('luasnip')
 local cmp = require('cmp')
 local lspconfig = require('lspconfig')
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-lsp.preset('recommended')
+require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup({
-  sources = {
-    { name = 'nvim_lsp' },
+  sources = cmp.config.sources ({
     { name = 'luasnip' },
-  },
+    { name = 'nvim_lsp' },
+  }),
   mapping = {
     ['<C-l>'] = cmp.mapping.confirm({select = true}),
-    ['<C-q>'] = cmp.mapping.abort(),
+    ['<C-h>'] = cmp.mapping.abort(),
     ['<C-k>'] = cmp.mapping.select_prev_item({behavior = 'select'}),
     ['<C-j>'] = cmp.mapping.select_next_item({behavior = 'select'}),
+
+    ['<CR>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            if ls.expandable() then
+                ls.expand()
+            else
+                cmp.confirm({
+                    select = true,
+                })
+            end
+        else
+            fallback()
+        end
+    end),
+
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif ls.locally_jumpable(1) then
+        ls.jump(1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif ls.locally_jumpable(-1) then
+        ls.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
   },
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      ls.lsp_expand(args.body)
     end,
   },
 })
 
-lsp.on_attach(function(_ , bufnr)
-	lsp.default_keymaps({
-    buffer = bufnr,
-    preserve_mappings = false
-	})
-end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -38,12 +67,13 @@ require('mason-lspconfig').setup({
 	  'lua_ls',
     'html',
     'htmx',
-    'gopls'
+    'gopls',
+    'ruby_lsp',
   },
   handlers = {
-    lsp.default_setup,
-
     lua_ls = function()
+      require('neodev').setup()
+
       lspconfig.lua_ls.setup ({
         capabilities = lsp_capabilities,
         settings = {
@@ -55,7 +85,7 @@ require('mason-lspconfig').setup({
             },
             diagnostics = {
               -- Get the language server to recognize the `vim` global
-              globals = { 'vim', color, 'P', 'describe', 'it' },
+              globals = { color, 'P', 'Map', 'describe', 'it', 'before_each' },
             },
             workspace = {
               -- Make the server aware of Neovim runtime files
@@ -84,6 +114,10 @@ require('mason-lspconfig').setup({
 
     cssls = function ()
       lspconfig.cssls.setup {}
+    end,
+
+    ruby_lsp = function ()
+      lspconfig.ruby_lsp.setup {}
     end,
   }
 })
