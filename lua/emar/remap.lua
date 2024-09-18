@@ -28,6 +28,6 @@ end)
 Map('n', '<leader>d', 'r✓')
 
 -- universal-tooltip
-Map('n', '<leader>rp', function ()
+Map('n', '<leader><leader>r', function ()
   tooltip.show()
 end)
